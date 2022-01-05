@@ -1,30 +1,58 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import todoList from './tempDatabase';
 import { TextField, Checkbox } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 function App() {
-  // const [checked, setChecked] = React.useState(true);
-  // const handleChange = (event) => {
-  //   setChecked(event.target.checked);
-  // };
+  const [toDo, setTodo] = useState(todoList);
+
+  const removeToDo = (id) => {
+    setTodo(toDo.filter((each) => each.id !== id));
+  };
+  const changeStatus = (id) => {
+    setTodo(
+      toDo.map((each) => {
+        if (each.id === id) {
+          return { ...each, completed: !each.completed };
+        }
+        return each;
+      })
+    );
+  };
   return (
     <div className="App">
       <header className="App-header">
         <h1>Todo App</h1>
       </header>
       <div>
-        <form>
+        <form
+          id="input-todo"
+          onSubmit={(e) => {
+            let task = e.target.elements.newToDo.value.trim();
+            e.preventDefault();
+
+            setTodo((todoList) => [
+              ...todoList,
+              {
+                id: uuidv4(),
+                task,
+                completed: false,
+              },
+            ]);
+          }}
+        >
           <TextField
             id="standard-basic"
             label="Add New todo"
             variant="standard"
+            name="newToDo"
           />
-          <button>Add</button>
+          <button type="submit">Add</button>
         </form>
       </div>
       <ul>
-        {todoList.map(({ task, completed }) => (
+        {toDo.map(({ id, task, completed }) => (
           <li key={task}>
             <p>
               {task}{' '}
@@ -34,17 +62,17 @@ function App() {
                   <Checkbox
                     name={task}
                     checked={completed}
-                    onChange={() => console.log('click')}
+                    onChange={() => changeStatus(id)}
                     inputProps={{ 'aria-label': { task } }}
                   />
                 }
                 {completed ? 'complete' : 'incomplete'}
               </span>
-              <button>
-                <EditIcon />{' '}
+              <button onClick={() => console.log(`edit ${task}`)}>
+                <EditIcon />
               </button>
-              <button key={task} onClick={() => console.log(task)}>
-                X
+              <button key={task} value={id} onClick={() => removeToDo(id)}>
+                <DeleteIcon />
               </button>
             </p>
           </li>
@@ -53,5 +81,13 @@ function App() {
     </div>
   );
 }
+// document.querySelector('#input-todo').addEventListener('submit', (e) => {
+//   let text = e.target.elements.newToDo.value.trim();
+//   e.preventDefault();
+//   toDo.push({
+//     text,
+//     completed: false,
+//   });
+// });
 
 export default App;
