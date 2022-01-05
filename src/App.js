@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
 import todoList from './tempDatabase';
 import { TextField, Checkbox } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { render } from '@testing-library/react';
 function App() {
   const [toDo, setTodo] = useState(todoList);
 
@@ -20,6 +22,42 @@ function App() {
       })
     );
   };
+  const editTaskName = (id, task) => {
+    const element = (
+      <div>
+        <form
+          id="edit-todo"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setTodo(
+              toDo.map((each) => {
+                if (each.id === id) {
+                  return {
+                    ...each,
+                    task: e.target.elements.editTodo.value.trim(),
+                  };
+                }
+                return each;
+              })
+            );
+          }}
+        >
+          <TextField
+            id="standard-basic"
+            label="Edit Task"
+            variant="standard"
+            name="editTodo"
+            defaultValue={task}
+          />
+
+          <button type="submit">update</button>
+        </form>
+      </div>
+    );
+    render();
+    ReactDOM.render(element, document.getElementById('taskItem'));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -53,9 +91,9 @@ function App() {
       </div>
       <ul>
         {toDo.map(({ id, task, completed }) => (
-          <li key={task}>
+          <li key={task + id}>
             <p>
-              {task}{' '}
+              <span id="taskItem">{task} </span>
               <span style={{ fontWeight: 'bold' }}>
                 status:
                 {
@@ -68,10 +106,10 @@ function App() {
                 }
                 {completed ? 'complete' : 'incomplete'}
               </span>
-              <button onClick={() => console.log(`edit ${task}`)}>
+              <button onClick={() => editTaskName(id, task)}>
                 <EditIcon />
               </button>
-              <button key={task} value={id} onClick={() => removeToDo(id)}>
+              <button key={id} value={id} onClick={() => removeToDo(id)}>
                 <DeleteIcon />
               </button>
             </p>
