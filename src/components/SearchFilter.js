@@ -9,13 +9,13 @@ const SearchFiltering = ({ toDo, setResults }) => {
       label="Search To do's"
       variant="standard"
       name="searchTodo"
-      onChange={(e) => searchTodo(setResults, toDo, e.target.value)}
+      onChange={(e) => searchTodo(toDo, e.target.value, setResults)}
     />
   );
 };
 
-export const FilteredResults = ({ toDo, searchResults, setTodo }) => (
-  <MapTodolist toDo={searchResults} setTodo={setTodo} />
+export const FilteredResults = ({ toDo, setTodo }) => (
+  <MapTodolist toDo={toDo} setTodo={setTodo} />
 );
 
 export default SearchFiltering;
