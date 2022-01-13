@@ -16,7 +16,7 @@ const MapTodolist = ({ toDo, setTodo }) => {
                 <Checkbox
                   name={task}
                   checked={completed}
-                  onChange={() => changeStatus(id, toDo, setTodo)}
+                  onChange={() => changeStatus(id, setTodo)}
                   inputProps={{ 'aria-label': { task } }}
                 />
               }
@@ -25,11 +25,7 @@ const MapTodolist = ({ toDo, setTodo }) => {
             {/*<button onClick={() => editTaskName(id, task)}>
         <EditIcon />
     </button>*/}
-            <button
-              key={id}
-              value={id}
-              onClick={() => removeToDo(id, toDo, setTodo)}
-            >
+            <button key={id} value={id} onClick={() => removeToDo(id, setTodo)}>
               <DeleteIcon />
             </button>
           </p>

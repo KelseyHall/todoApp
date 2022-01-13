@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-
+import { Checkbox } from '@mui/material';
 // import EditIcon from '@mui/icons-material/Edit';
 import todoList from '../tempDatabase';
 import MapTodolist from './mapTodolist';
 import AddNewTodo from './AddNewTodo';
+import SearchFiltering from './SearchFilter';
 
 const DisplayTodoList = () => {
   const [toDo, setTodo] = useState(todoList);
+  const [value, setValue] = useState('');
 
   const completedTodo = toDo.filter((each) => each.completed === true);
+  const filterTodo = () => {
+    if (value.trim().length === 0) {
+      return toDo;
+    } else {
+      return toDo.filter((todo) => todo.task.includes(value));
+    }
+  };
 
   return (
     <div>
@@ -22,9 +31,10 @@ const DisplayTodoList = () => {
         Completed
       </p>
 
-      <AddNewTodo setTodo={setTodo} toDo={toDo} />
-      <MapTodolist toDo={toDo} setTodo={setTodo} />
-      <p>search</p>
+      <AddNewTodo setTodo={setTodo} />
+      <SearchFiltering value={value} setValue={setValue} />
+
+      <MapTodolist toDo={filterTodo()} setTodo={setTodo} />
     </div>
   );
 };

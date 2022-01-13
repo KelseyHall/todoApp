@@ -1,21 +1,18 @@
-import { searchTodo } from './functions';
+// import { searchTodo } from './functions';
 import { TextField } from '@mui/material';
-import MapTodolist from './mapTodolist';
+// import MapTodolist from './mapTodolist';
 
-const SearchFiltering = ({ toDo, setResults }) => {
+const SearchFiltering = ({ value, setValue }) => {
   return (
     <TextField
       id="standard-basic"
       label="Search To do's"
       variant="standard"
       name="searchTodo"
-      onChange={(e) => searchTodo(toDo, e.target.value, setResults)}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
     />
   );
 };
-
-export const FilteredResults = ({ toDo, setTodo }) => (
-  <MapTodolist toDo={toDo} setTodo={setTodo} />
-);
 
 export default SearchFiltering;

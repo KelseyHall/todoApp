@@ -1,8 +1,8 @@
 import { addTodo } from './functions';
 import { TextField } from '@mui/material';
-const AddNewTodo = ({ setTodo, toDo }) => (
+const AddNewTodo = ({ setTodo }) => (
   <div>
-    <form id="input-todo" onSubmit={(e) => addTodo(e, setTodo, toDo)}>
+    <form id="input-todo" onSubmit={(e) => addTodo(e, setTodo)}>
       <TextField
         id="standard-basic"
         label="Add New todo"

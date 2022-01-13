@@ -1,13 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-export const removeToDo = (id, toDo, setTodo) => {
-  setTodo(toDo.filter((each) => each.id !== id));
+
+export const removeToDo = (id, setTodo) => {
+  setTodo((toDo) => toDo.filter((each) => each.id !== id));
 };
-// export const searchTodo = (toDo, text, setResults) => {
-//   // console.log(text);
-//   setResults(toDo.filter((each) => each.task.includes(text)));
-// };
-export const changeStatus = (id, toDo, setTodo) => {
-  setTodo(
+
+export const changeStatus = (id, setTodo) => {
+  setTodo((toDo) =>
     toDo.map((each) => {
       if (each.id === id) {
         return { ...each, completed: !each.completed };
@@ -17,10 +15,7 @@ export const changeStatus = (id, toDo, setTodo) => {
   );
 };
 
-// const updateResults = (toDo) => {
-//   console.log(toDo);
-// };
-export const addTodo = (e, setTodo, toDo, setResults) => {
+export const addTodo = (e, setTodo) => {
   let task = e.target.elements.newToDo.value.trim();
   e.preventDefault();
 
