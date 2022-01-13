@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
+import { Checkbox } from '@mui/material';
 // import EditIcon from '@mui/icons-material/Edit';
 import todoList from '../tempDatabase';
 import MapTodolist from './mapTodolist';
 import AddNewTodo from './AddNewTodo';
-import SearchFiltering, { FilteredResults } from './SearchFilter';
-// import { searchTodo } from './functions';
-
-// import { TextField } from '@mui/material';
+import SearchFiltering from './SearchFilter';
 
 const DisplayTodoList = () => {
   const [toDo, setTodo] = useState(todoList);
-  const [searchResults, setResults] = useState(toDo);
-  const completedTodo = toDo.filter((each) => each.completed === true);
+  const [value, setValue] = useState('');
 
-  const UpdateSearch = ({ toDo, searchResults, setResults }) => {
-    console.log(searchResults);
-    useEffect(() => {
-      console.log('use effect');
-      setResults(searchResults);
-    }, [toDo]);
-    return <FilteredResults setTodo={setTodo} toDo={searchResults} />;
+  const completedTodo = toDo.filter((each) => each.completed === true);
+  const filterTodo = () => {
+    if (value.trim().length === 0) {
+      return toDo;
+    } else {
+      return toDo.filter((todo) => todo.task.includes(value));
+    }
   };
-  // console.log(toDo);
+
   return (
     <div>
       <p>
@@ -34,24 +30,11 @@ const DisplayTodoList = () => {
         <span style={{ fontWeight: 'bold' }}>{completedTodo.length}</span>{' '}
         Completed
       </p>
-      {/*<TextField
-        id="standard-basic"
-        label="Search To do's"
-        variant="standard"
-        name="searchTodo"
-        onChange={(e) => {
-          searchTodo(toDo, e.target.value, setResults);
-        }}
-      />*/}
-      <SearchFiltering toDo={toDo} setResults={setResults} />
-      <AddNewTodo setTodo={setTodo} toDo={toDo} setResults={setResults} />
-      <MapTodolist toDo={toDo} setTodo={setTodo} />
-      <p>search</p>
-      <UpdateSearch
-        toDo={toDo}
-        searchResults={searchResults}
-        setResults={setResults}
-      />
+
+      <AddNewTodo setTodo={setTodo} />
+      <SearchFiltering value={value} setValue={setValue} />
+
+      <MapTodolist toDo={filterTodo()} setTodo={setTodo} />
     </div>
   );
 };
