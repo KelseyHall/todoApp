@@ -18,15 +18,18 @@ export const changeStatus = (id, setTodo) => {
 export const addTodo = (e, setTodo) => {
   let task = e.target.elements.newToDo.value.trim();
   e.preventDefault();
+  if (task.length > 0) {
+    setTodo((todoList) => [
+      ...todoList,
+      {
+        id: uuidv4(),
+        task,
+        completed: false,
+      },
+    ]);
 
-  setTodo((todoList) => [
-    ...todoList,
-    {
-      id: uuidv4(),
-      task,
-      completed: false,
-    },
-  ]);
-
-  e.target.elements.newToDo.value = '';
+    e.target.elements.newToDo.value = '';
+  } else {
+    console.log('error');
+  }
 };

@@ -1,15 +1,26 @@
 import { addTodo } from './functions';
-import { TextField } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 const AddNewTodo = ({ setTodo }) => (
   <div>
     <form id="input-todo" onSubmit={(e) => addTodo(e, setTodo)}>
       <TextField
+        fullWidth
         id="standard-basic"
         label="Add New todo"
-        variant="standard"
+        variant="filled"
         name="newToDo"
+        color="primary"
+        margin="normal"
       />
-      <button type="submit">Add</button>
+      <Button
+        fullWidth
+        size="small"
+        variant="contained"
+        color="primary"
+        type="submit"
+      >
+        Add
+      </Button>
     </form>
   </div>
 );
