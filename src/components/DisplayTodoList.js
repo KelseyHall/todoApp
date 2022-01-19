@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox } from '@mui/material';
-// import EditIcon from '@mui/icons-material/Edit';
+import { Container, Typography } from '@mui/material';
 import todoList from '../tempDatabase';
 import MapTodolist from './mapTodolist';
 import AddNewTodo from './AddNewTodo';
@@ -10,7 +9,7 @@ const DisplayTodoList = () => {
   const [toDo, setTodo] = useState(todoList);
   const [value, setValue] = useState('');
 
-  const completedTodo = toDo.filter((each) => each.completed === true);
+  const completedAmount = toDo.filter((todo) => todo.completed).length;
   const filterTodo = () => {
     if (value.trim().length === 0) {
       return toDo;
@@ -21,19 +20,30 @@ const DisplayTodoList = () => {
 
   return (
     <div>
-      <p>
-        You have <span style={{ fontWeight: 'bold' }}>{toDo.length}</span>{' '}
-        todo's
-      </p>
-      <p>
-        You have{' '}
-        <span style={{ fontWeight: 'bold' }}>{completedTodo.length}</span>{' '}
-        Completed
-      </p>
-
       <AddNewTodo setTodo={setTodo} />
-      <SearchFiltering value={value} setValue={setValue} />
-
+      <Typography variant="subtitle1" align="center" sx={{ margin: '15px 0' }}>
+        You have completed{' '}
+        <span style={{ fontWeight: 'bold' }}>
+          {completedAmount === toDo.length
+            ? 'All'
+            : `${completedAmount} out of ${toDo.length}`}
+        </span>{' '}
+        todo's
+      </Typography>
+      <Container
+        disableGutters
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+        }}
+      >
+        <Typography variant="body2" sx={{ marginBottom: 'none' }}>
+          Check completed:
+        </Typography>
+        <SearchFiltering value={value} setValue={setValue} />
+      </Container>
       <MapTodolist toDo={filterTodo()} setTodo={setTodo} />
     </div>
   );

@@ -1,3 +1,5 @@
+import { AppBar, Container, Typography } from '@mui/material';
+
 import React from 'react';
 
 import DisplayTodoList from './components/DisplayTodoList';
@@ -5,11 +7,14 @@ import DisplayTodoList from './components/DisplayTodoList';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Todo App</h1>
-      </header>
-
-      <DisplayTodoList />
+      <AppBar position="sticky">
+        <Typography variant="h2" align="center">
+          Todo App
+        </Typography>
+      </AppBar>
+      <Container>
+        <DisplayTodoList />
+      </Container>
     </div>
   );
 }
