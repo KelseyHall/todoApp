@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
-import todoList from '../tempDatabase';
+
 import MapTodolist from './mapTodolist';
 import AddNewTodo from './AddNewTodo';
 import SearchFiltering from './SearchFilter';
 
 const DisplayTodoList = () => {
-  const [toDo, setTodo] = useState(todoList);
   const [value, setValue] = useState('');
+  const [toDo, setTodo] = useState(() => {
+    const getSavedTodos = localStorage.getItem('todoList');
+    if (getSavedTodos) {
+      return JSON.parse(getSavedTodos);
+    } else {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('todoList', JSON.stringify(toDo));
+  }, [toDo]);
 
   const completedAmount = toDo.filter((todo) => todo.completed).length;
+
   const filterTodo = () => {
     if (value.trim().length === 0) {
       return toDo;
@@ -18,17 +30,22 @@ const DisplayTodoList = () => {
     }
   };
 
+  const taskStatement = () => {
+    if (toDo.length === 0) {
+      return 'no';
+    } else {
+      return completedAmount === toDo.length
+        ? 'All'
+        : `${completedAmount} out of ${toDo.length}`;
+    }
+  };
+
   return (
     <div>
       <AddNewTodo setTodo={setTodo} />
       <Typography variant="subtitle1" align="center" sx={{ margin: '15px 0' }}>
         You have completed{' '}
-        <span style={{ fontWeight: 'bold' }}>
-          {completedAmount === toDo.length
-            ? 'All'
-            : `${completedAmount} out of ${toDo.length}`}
-        </span>{' '}
-        todo's
+        <span style={{ fontWeight: 'bold' }}>{taskStatement()}</span> todo's
       </Typography>
       <Container
         disableGutters

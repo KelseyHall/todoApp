@@ -18,6 +18,7 @@ export const changeStatus = (id, setTodo) => {
 export const addTodo = (e, setTodo) => {
   let task = e.target.elements.newToDo.value.trim();
   e.preventDefault();
+
   if (task.length > 0) {
     setTodo((todoList) => [
       ...todoList,
