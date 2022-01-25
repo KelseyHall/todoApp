@@ -6,7 +6,7 @@ const SearchFiltering = ({ value, setValue }) => {
   return (
     <TextField
       id="standard-basic"
-      label="Search To do's"
+      label="Search todos"
       variant="standard"
       name="searchTodo"
       value={value}
