@@ -4,6 +4,7 @@ import { Container, Typography } from '@mui/material';
 import MapTodolist from './mapTodolist';
 import AddNewTodo from './AddNewTodo';
 import SearchFiltering from './SearchFilter';
+import { breakpoints } from '@mui/system';
 
 const DisplayTodoList = () => {
   const [value, setValue] = useState('');
@@ -23,10 +24,11 @@ const DisplayTodoList = () => {
   const completedAmount = toDo.filter((todo) => todo.completed).length;
 
   const filterTodo = () => {
+    const findTodo = toDo.filter((todo) => todo.task.includes(value));
     if (value.trim().length === 0) {
       return toDo;
     } else {
-      return toDo.filter((todo) => todo.task.includes(value));
+      return findTodo;
     }
   };
 
@@ -47,19 +49,39 @@ const DisplayTodoList = () => {
         You have completed{' '}
         <span style={{ fontWeight: 'bold' }}>{taskStatement()}</span> todo's
       </Typography>
+
       <Container
         disableGutters
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-        }}
+        sx={[
+          {
+            display: 'flex',
+            flexDirection: 'row-reverse',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+          },
+          (theme) => ({
+            [theme.breakpoints.only('xs')]: {
+              flexDirection: 'Column',
+              alignItems: 'stretch',
+            },
+          }),
+        ]}
       >
-        <Typography variant="body2" sx={{ marginBottom: 'none' }}>
+        <SearchFiltering value={value} setValue={setValue} />
+
+        <Typography
+          variant="body2"
+          sx={[
+            { marginBottom: 'none' },
+            (theme) => ({
+              [theme.breakpoints.only('xs')]: {
+                marginTop: '20px',
+              },
+            }),
+          ]}
+        >
           Check completed:
         </Typography>
-        <SearchFiltering value={value} setValue={setValue} />
       </Container>
       <MapTodolist toDo={filterTodo()} setTodo={setTodo} />
     </div>
