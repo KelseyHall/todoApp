@@ -14,7 +14,7 @@ const MapTodolist = ({ toDo, setTodo }) => {
   if (toDo.length === 0) {
     return (
       <Typography variant="body1" color="secondary" align="center" mt={3}>
-        No Todo's to show
+        No todos to show
       </Typography>
     );
   } else {

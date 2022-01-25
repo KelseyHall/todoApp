@@ -46,7 +46,7 @@ const DisplayTodoList = () => {
       <AddNewTodo setTodo={setTodo} />
       <Typography variant="subtitle1" align="center" sx={{ margin: '15px 0' }}>
         You have completed{' '}
-        <span style={{ fontWeight: 'bold' }}>{taskStatement()}</span> todo's
+        <span style={{ fontWeight: 'bold' }}>{taskStatement()}</span> todos
       </Typography>
 
       <Container
