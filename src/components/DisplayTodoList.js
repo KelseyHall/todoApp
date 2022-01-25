@@ -4,7 +4,6 @@ import { Container, Typography } from '@mui/material';
 import MapTodolist from './mapTodolist';
 import AddNewTodo from './AddNewTodo';
 import SearchFiltering from './SearchFilter';
-import { breakpoints } from '@mui/system';
 
 const DisplayTodoList = () => {
   const [value, setValue] = useState('');

@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { removeToDo, changeStatus, searchTodo } from './functions';
+import { removeToDo, changeStatus } from './functions';
 
 const MapTodolist = ({ toDo, setTodo }) => {
   if (toDo.length === 0) {
