@@ -15,7 +15,7 @@ export const changeStatus = (id, setTodo) => {
   );
 };
 
-export const addTodo = (e, setTodo) => {
+export const addTodo = (e, setTodo, setError) => {
   let task = e.target.elements.newToDo.value.trim();
   e.preventDefault();
 
@@ -28,9 +28,12 @@ export const addTodo = (e, setTodo) => {
         completed: false,
       },
     ]);
-
+    setError({ error: false, message: '' });
     e.target.elements.newToDo.value = '';
   } else {
-    console.log('error');
+    setError({
+      error: true,
+      message: '*make sure to add value before hitting add',
+    });
   }
 };
